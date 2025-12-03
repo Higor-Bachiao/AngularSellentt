@@ -4,7 +4,10 @@
             <div style = "font-size: 1.5em;" class="nav-bar-items">Codeible</div>
         </div>
         <div id = "nav-bar-right">
-            <div class = "nav-bar-items">login</div>
+            <div *ngIf="!loggedIn()" (click)="onLoginClick()"
+            class = "nav-bar-items">login</div>
+            <div *ngIf="loggedIn()" (click)="onLogoutClick()"
+            class = "nav-bar-items">logout</div>
         </div>
     </div>
 </div>
