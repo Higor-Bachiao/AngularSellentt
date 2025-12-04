@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { AuthenticatorComponent } from './tools/authenticator/authenticator.component';
 import { FirebaseTSAuth } from 'firebasets/firebasetsAuth/firebaseTSAuth';
+import{ Router } from '@angular/router';
+import {FirebaseTSFirestore} from 'firebasets/firebasetsFirestore/firebaseTSFirestore';
 
 
 @Component({
@@ -12,25 +14,27 @@ import { FirebaseTSAuth } from 'firebasets/firebasetsAuth/firebaseTSAuth';
 export class AppComponent {
   title = 'CodeibleSocialMediaProject';
   auth = new FirebaseTSAuth();
-  
-  constructor(private loginSheet: MatBottomSheet){
+  firestore = new FirebaseTSFirestore();
+  userHasProfile = true;
+  userDocument: UserDocument = { publicName: '', description: '' };
+
+
+  constructor(private loginSheet: MatBottomSheet, private router: Router){
     this.auth.listenToSignInStateChanges(
       user => {
         this.auth.checkSignInState(
           {
-            whenSignedIn: user =>{
-              alert("Logged in");
+            whenSignedIn: user =>{            
               
             },
             whenSignedOut: user =>{
-              alert("Logged out");
               
             },
             whenSignedInAndEmailNotVerified: user =>{
-              
+              this.router.navigate(["email-verification"]);
             },
             whenSignedInAndEmailVerified: user =>{
-
+              this.getUserProfile();
             },
             whenChanged: user =>{
 
@@ -41,11 +45,32 @@ export class AppComponent {
     );
   }
 
+  getUserProfile() {
+    const currentUser = this.auth.getAuth().currentUser;
+    if (!currentUser) {
+      console.error("User not logged in!");
+      return;
+    }
+
+    this.firestore.listenToDocument(
+      {
+        name: "Getting Document",
+        path:["Users", currentUser.uid],
+        onUpdate: (result) => {
+          this.userDocument = <UserDocument> result.data(); 
+          this.userHasProfile = result.exists;
+          if(this.userHasProfile) {
+            this.router.navigate(["postFeed"]);
+          }
+
+        }
+      }
+    );
+  }
+
   onLogoutClick(){
     this.auth.signOut();
   }
-
-
 
   loggedIn(){
     return this.auth.isSignedIn();
@@ -53,4 +78,9 @@ export class AppComponent {
   onLoginClick(){
     this.loginSheet.open(AuthenticatorComponent);
   }
+}
+
+export interface UserDocument {
+  publicName: string;
+  description: string;
 }

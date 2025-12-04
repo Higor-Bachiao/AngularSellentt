@@ -9,15 +9,27 @@ import {Router} from '@angular/router';
 })
 export class EmailVerificationComponent implements OnInit {
 
-  suth = new FirebaseTSAuth();
-  constructor() { }
+  auth = new FirebaseTSAuth();
+
+  constructor(private router: Router) { }
+
 
   ngOnInit(): void {
+    if(this.auth.isSignedIn() && 
+    this.auth.getAuth().currentUser &&
+    !this.auth.getAuth().currentUser!.emailVerified)
+    {
+      // Enviar email de verificação
+      this.auth.sendVerificationEmail();
+    } else{
+      // Se não está logado ou já verificou, volta para home
+      this.router.navigate([""]);
+    }
   }
 
 
   onResendClick(){
-    this.suth.sendVerificationEmail();
+    this.auth.sendVerificationEmail();
   }
 
 

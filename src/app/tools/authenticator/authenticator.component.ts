@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FirebaseTSAuth} from 'firebasets/firebasetsAuth/firebaseTSAuth';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-authenticator',
@@ -11,7 +12,10 @@ export class AuthenticatorComponent implements OnInit {
   state = AuthenticatorCompState.LOGIN;
   firebasetsAuth: FirebaseTSAuth;
 
-  constructor(private bottomSheetRef: MatBottomSheetRef) {
+  constructor(
+    private bottomSheetRef: MatBottomSheetRef,
+    private router: Router
+  ) {
     this.firebasetsAuth = new FirebaseTSAuth();
   }
   
@@ -46,6 +50,8 @@ export class AuthenticatorComponent implements OnInit {
           password : password,
           onComplete: (uc: any) =>{
             this.bottomSheetRef.dismiss();
+            // Redirecionar para verificação de email se não estiver verificado
+            this.router.navigate(["email-verification"]);
           },
           onFail: (err: any) =>{
             alert("Failed to login: " + err);
@@ -76,6 +82,8 @@ export class AuthenticatorComponent implements OnInit {
         password : password,
         onComplete: (uc: any) =>{
           this.bottomSheetRef.dismiss();
+          // Redirecionar para verificação de email após criar conta
+          this.router.navigate(["email-verification"]);
         },
         onFail: (err: any) =>{
           alert("Failed to create account: " + err);

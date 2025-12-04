@@ -1,0 +1,21 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Create Post</mat-card-title>
+    </mat-card-header>
+    <div>
+        <textarea placeholder="What's on your mind?"></textarea>
+    </div>
+    <div *ngIf="selectedImagesFile" id="post-preview">
+        <img id="post-preview-image"/>
+    </div>
+        <mat-card-actions align="end">
+            <button mat-button color="warn">
+                <label for="photo-upload">Upload Photo
+                    <input #photoSelector (change)="onPhotoSelected(photoSelector)" 
+                    id="photo-upload" type="file" accept="image/*">
+                    <mat-icon>Insert_photo</mat-icon>
+                </label>
+            </button> 
+            <button mat-button color="warn">Create Post</button>
+        </mat-card-actions>
+</mat-card>
