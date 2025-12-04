@@ -25,33 +25,48 @@ export class ProfileComponent implements OnInit {
   }
 
   onContinueClick(nameInput: HTMLInputElement, descriptionInput: HTMLTextAreaElement){
-    let name = nameInput.value;
-    let description = descriptionInput.value;
+    let name = nameInput.value.trim();
+    let description = descriptionInput.value.trim();
+
+    console.log("=== Creating profile ===");
+    console.log("Name:", name);
+    console.log("Description:", description);
+
+    // Validar campos
+    if (!name || !description) {
+      alert("Please fill in both name and description!");
+      return;
+    }
 
     // Verificar se o usuário está logado
     const currentUser = this.auth.getAuth().currentUser;
+    console.log("Current user:", currentUser);
+    
     if (!currentUser) {
       alert("User not logged in!");
       return;
     }
 
-    this.firestore.create(
-      {
-        path:["Users", currentUser.uid],
-        data:
-          {
-            publicName: name,
-            description: description
+    console.log("Creating profile for user:", currentUser.uid);
 
-          },
-          onComplete: (docId: any) =>{
-            alert("Profile created successfully!");
-            nameInput.value = "";
-            descriptionInput.value = "";
-          },
-          onFail: (err: any) =>{
-            alert("Failed to create profile: " + err);
-        }      
-      });
+    this.firestore.create({
+      path: ["Users", currentUser.uid],
+      data: {
+        publicName: name,
+        description: description,
+        createdAt: new Date().toISOString()
+      },
+      onComplete: (docId: any) => {
+        console.log("✅ Profile created successfully! Doc ID:", docId);
+        alert("Profile created successfully! Redirecting...");
+        
+        // Recarregar a página para atualizar o estado
+        window.location.reload();
+      },
+      onFail: (err: any) => {
+        console.error("❌ Failed to create profile:", err);
+        alert("Failed to create profile: " + err);
+      }      
+    });
   }
 }

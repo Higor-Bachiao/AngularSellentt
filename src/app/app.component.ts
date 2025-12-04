@@ -15,7 +15,7 @@ export class AppComponent {
   title = 'CodeibleSocialMediaProject';
   auth = new FirebaseTSAuth();
   firestore = new FirebaseTSFirestore();
-  userHasProfile = true;
+  userHasProfile = false;
   userDocument: UserDocument = { publicName: '', description: '' };
 
 
@@ -52,17 +52,24 @@ export class AppComponent {
       return;
     }
 
+    console.log("Getting user profile for:", currentUser.uid);
+
     this.firestore.listenToDocument(
       {
         name: "Getting Document",
         path:["Users", currentUser.uid],
         onUpdate: (result) => {
-          this.userDocument = <UserDocument> result.data(); 
+          console.log("Profile exists:", result.exists);
+          console.log("Profile data:", result.data());
+          
           this.userHasProfile = result.exists;
-          if(this.userHasProfile) {
+          
+          if(result.exists) {
+            this.userDocument = <UserDocument> result.data();
             this.router.navigate(["postFeed"]);
+          } else {
+            console.log("Profile does not exist, showing profile creation");
           }
-
         }
       }
     );
