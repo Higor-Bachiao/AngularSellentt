@@ -1,41 +1,62 @@
 <div id = "authenticator">
-    <mat-card id = "authenticator-content">
-        <mat-card-header>
-            <mat-card-title>{{getStateText()}}</mat-card-title>
+    <mat-card id = "authenticator-content" class="auth-card">
+        <mat-card-header class="auth-header">
+            <mat-card-title class="auth-title">{{getStateText()}}</mat-card-title>
+            <div class="auth-subtitle">Welcome to Codeible Social Network</div>
         </mat-card-header>
-        <div *ngIf="isLoginState()">
-            <input #loginEmail placeholder = "Email"/>
-            <input #loginPassword placeholder = "Password" type="password"/>
+        
+        <div class="auth-form" *ngIf="isLoginState()">
+            <div class="input-group">
+                <label class="input-label">Email</label>
+                <input #loginEmail placeholder = "Enter your email" class="styled-input"/>
+            </div>
+            <div class="input-group">
+                <label class="input-label">Password</label>
+                <input #loginPassword placeholder = "Enter your password" type="password" class="styled-input"/>
+            </div>
             <button
              (click)="onLogin(loginEmail, loginPassword)"
-             mat-flat-button color = "warn"> Login</button>
+             mat-flat-button color = "warn" class="primary-btn"> Login</button>
         </div>
-        <div *ngIf="isRegisterState()">
-            <input #registerEmail placeholder="Email">
-            <input #registerPassword placeholder="Password" type="password">
-            <input #registerConfirmPassword placeholder="Confirm Password" type="password">
+        
+        <div class="auth-form" *ngIf="isRegisterState()">
+            <div class="input-group">
+                <label class="input-label">Email</label>
+                <input #registerEmail placeholder="Enter your email" class="styled-input">
+            </div>
+            <div class="input-group">
+                <label class="input-label">Password</label>
+                <input #registerPassword placeholder="Enter your password" type="password" class="styled-input">
+            </div>
+            <div class="input-group">
+                <label class="input-label">Confirm Password</label>
+                <input #registerConfirmPassword placeholder="Confirm your password" type="password" class="styled-input">
+            </div>
             <button
                 (click)="onRegisterClick(
                     registerEmail,
                     registerPassword,
                     registerConfirmPassword
                 )"
-    
-            mat-flat-button color = "warn"> Create</button>
+            mat-flat-button color = "warn" class="primary-btn"> Create Account</button>
         </div>
-        <div *ngIf="isForgotPasswordState()">
-            <input #resetEmail placeholder="Email">
+        
+        <div class="auth-form" *ngIf="isForgotPasswordState()">
+            <div class="input-group">
+                <label class="input-label">Email</label>
+                <input #resetEmail placeholder="Enter your email" class="styled-input">
+            </div>
             <button (click)="onResetClick(resetEmail)"
-            mat-flat-button color = "warn">Reset</button>
-
+            mat-flat-button color = "warn" class="primary-btn">Reset Password</button>
         </div>
-        <mat-card-actions align="end">
-            <button mat-flat-button
-            (click)="onForgotPasswordClick()">Forgot Password</button>
-            <button mat-flat-button
+        
+        <mat-card-actions class="auth-actions">
+            <button mat-button class="secondary-btn"
+            (click)="onForgotPasswordClick()">Forgot Password?</button>
+            <button mat-button class="secondary-btn"
             (click)="onCreateAccountClick()">Create an Account</button>
-            <button mat-flat-button
-            (click)="onLoginClick()">Login</button>
+            <button mat-button class="secondary-btn"
+            (click)="onLoginClick()">Back to Login</button>
         </mat-card-actions>
     </mat-card>
 </div>

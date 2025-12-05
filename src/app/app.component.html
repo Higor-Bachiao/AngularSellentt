@@ -1,13 +1,16 @@
 <div id="nav-bar">
     <div id="nav-bar-content">
         <div id = "nav-bar-left">
-            <div style = "font-size: 1.5em;" class="nav-bar-items">Codeible</div>
+            <div style = "font-size: 1.5em; font-weight: bold;" class="nav-bar-items">Codeible</div>
         </div>
         <div id = "nav-bar-right">
             <div *ngIf="!loggedIn()" (click)="onLoginClick()"
-            class = "nav-bar-items">login</div>
-            <div *ngIf="loggedIn() && userHasProfile" class = "nav-bar-items">Hello, {{userDocument.publicName}}</div>
-            <div *ngIf="loggedIn()" (click)="onLogoutClick()" class = "nav-bar-items">logout</div>
+            class = "nav-bar-items login-btn">Login</div>
+            <div *ngIf="loggedIn() && userHasProfile" class = "nav-bar-items username-display">
+                <span class="greeting-text">Hello,</span> 
+                <span class="username-text">{{getUsername()}}</span>
+            </div>
+            <div *ngIf="loggedIn()" (click)="onLogoutClick()" class = "nav-bar-items logout-btn">Logout</div>
         </div>
     </div>
 </div>

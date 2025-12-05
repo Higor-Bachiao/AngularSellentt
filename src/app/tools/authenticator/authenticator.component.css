@@ -2,30 +2,122 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1em;
+    min-height: 100vh;
+    padding: 2em;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 #authenticator-content {
     width: 100%;
-    max-width: 30em;
-    padding: 1.5em;
+    max-width: 450px;
+    padding: 0;
 }
 
-button{
-    margin : .5em;
+.auth-card {
+    border-radius: 20px !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3) !important;
+    overflow: hidden;
 }
 
-input {
+.auth-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 2.5em 2em !important;
+    margin: 0 !important;
+    color: white;
+}
+
+.auth-title {
+    font-size: 2em !important;
+    font-weight: bold !important;
+    margin-bottom: 0.3em !important;
+    color: white !important;
+}
+
+.auth-subtitle {
+    font-size: 0.95em;
+    color: rgba(255, 255, 255, 0.9);
+    margin-top: 0.5em;
+}
+
+.auth-form {
+    padding: 2em;
+}
+
+.input-group {
+    margin-bottom: 1.5em;
+}
+
+.input-label {
+    display: block;
+    font-size: 0.9em;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5em;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.styled-input {
     width: 100%;
-    margin: .5em 0;
-    padding: 1em;
-    border-radius: 5px;
+    padding: 1em 1.2em;
+    border-radius: 10px;
     outline: none;
-    border: 1px solid rgba(15, 15, 15, 0.3);
+    border: 2px solid #e0e0e0;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    font-size: 1em;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+}
+
+.styled-input:focus {
+    border-color: #667eea;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.styled-input::placeholder {
+    color: #999;
+}
+
+.primary-btn {
+    width: 100%;
+    padding: 1em !important;
+    margin: 1.5em 0 1em 0 !important;
+    border-radius: 10px !important;
+    font-size: 1.1em !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    transition: all 0.3s ease !important;
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4) !important;
+}
+
+.auth-actions {
+    padding: 1.5em 2em 2em 2em !important;
+    background: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.secondary-btn {
+    width: 100%;
+    color: #667eea !important;
+    font-weight: 500 !important;
+    transition: all 0.3s ease !important;
+}
+
+.secondary-btn:hover {
+    background: rgba(102, 126, 234, 0.1) !important;
+    transform: translateX(5px);
 }

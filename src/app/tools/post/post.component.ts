@@ -23,11 +23,8 @@ export class PostComponent implements OnInit {
   }
 
   onReplyClick(){
-    this.dialog.open(ReplyComponent); 
-  }
-
-  openReplyBox(){
-    this.dialog.open(ReplyComponent);
+    console.log("Opening reply dialog for post:", this.postData.postId);
+    this.dialog.open(ReplyComponent,{data: this.postData.postId}); 
   }
 
   getCreatorInfo(){

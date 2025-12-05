@@ -16,7 +16,7 @@ export class AppComponent {
   auth = new FirebaseTSAuth();
   firestore = new FirebaseTSFirestore();
   userHasProfile = false;
-  userDocument: UserDocument = { publicName: '', description: '' };
+  private static userDocument: UserDocument | null = null;
 
 
   constructor(private loginSheet: MatBottomSheet, private router: Router){
@@ -28,7 +28,7 @@ export class AppComponent {
               
             },
             whenSignedOut: user =>{
-              
+              AppComponent.userDocument = null;
             },
             whenSignedInAndEmailNotVerified: user =>{
               this.router.navigate(["email-verification"]);
@@ -43,6 +43,19 @@ export class AppComponent {
         );
       }
     );
+  }
+
+  public static getUserDocument() {
+    return AppComponent.userDocument;
+  }
+
+  getUsername(){
+    try{
+      return AppComponent.userDocument?.publicName;
+
+    } catch(err){
+      return '';
+    }
   }
 
   getUserProfile() {
@@ -63,9 +76,9 @@ export class AppComponent {
           console.log("Profile data:", result.data());
           
           this.userHasProfile = result.exists;
-          
           if(result.exists) {
-            this.userDocument = <UserDocument> result.data();
+            AppComponent.userDocument = <UserDocument> result.data();
+            AppComponent.userDocument.userId = this.auth.getAuth().currentUser!.uid;
             this.router.navigate(["postFeed"]);
           } else {
             console.log("Profile does not exist, showing profile creation");
@@ -90,4 +103,5 @@ export class AppComponent {
 export interface UserDocument {
   publicName: string;
   description: string;
+  userId: string;
 }
