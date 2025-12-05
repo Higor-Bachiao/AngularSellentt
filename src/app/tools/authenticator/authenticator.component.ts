@@ -50,8 +50,7 @@ export class AuthenticatorComponent implements OnInit {
           password : password,
           onComplete: (uc: any) =>{
             this.bottomSheetRef.dismiss();
-            // Redirecionar para verificação de email se não estiver verificado
-            this.router.navigate(["email-verification"]);
+            // O app.component vai detectar o login e redirecionar automaticamente
           },
           onFail: (err: any) =>{
             alert("Failed to login: " + err);
@@ -82,8 +81,7 @@ export class AuthenticatorComponent implements OnInit {
         password : password,
         onComplete: (uc: any) =>{
           this.bottomSheetRef.dismiss();
-          // Redirecionar para verificação de email após criar conta
-          this.router.navigate(["email-verification"]);
+          // O app.component vai detectar o registro e redirecionar automaticamente
         },
         onFail: (err: any) =>{
           alert("Failed to create account: " + err);

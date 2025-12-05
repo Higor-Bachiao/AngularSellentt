@@ -24,7 +24,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onContinueClick(nameInput: HTMLInputElement, descriptionInput: HTMLTextAreaElement){
+  onContinueClick(nameInput: HTMLInputElement, descriptionInput: HTMLTextAreaElement){ //cria o perfil do usuario
     let name = nameInput.value.trim();
     let description = descriptionInput.value.trim();
 

@@ -21,10 +21,11 @@ export class EmailVerificationComponent implements OnInit {
     {
       // Enviar email de verificação
       this.auth.sendVerificationEmail();
-    } else{
-      // Se não está logado ou já verificou, volta para home
+    } else if(!this.auth.isSignedIn()){
+      // Se não está logado, volta para home
       this.router.navigate([""]);
     }
+    // Se email já verificado, não faz nada - deixa o app.component redirecionar
   }
 
 
